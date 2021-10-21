@@ -1,27 +1,30 @@
 package br.com.bancopratica.Banco.Contas.modelo;
+import br.com.bancopratica.Banco.Exceptions.modelo.*;
 
 public class ContaPoupanca extends Conta {
 	
-	public ContaPoupanca(int agencia, int numero) {
+	public ContaPoupanca(int agencia, int numero) throws SaldoInsuficienteException{
 		super(agencia, numero);
 	}
 
 	@Override
-	public void deposita(double valor) {
+	public void deposita(double valor) throws SaldoInsuficienteException {
 		//!! Conta Poupança - Depósito com taxa de 10%.
 		if(valor>=1) {
 		super.saldo+=(valor - (valor*0.1));
 		}else{
-		System.out.println("Não é possível depositar valor menores que R$1.");
-		//implementar excemption aqui o quanto antes possível
+			throw new SaldoInsuficienteException("O saldo é insuficiente");
 		}
 	}
 
 	@Override
 	public void transfere(Conta contaDestino, double valor) {
 		this.saca(valor);
+		try {
 		contaDestino.deposita(valor);
-		
+		}catch(Exception e) {
+			System.out.println(e);
+		}
 
 	}
 

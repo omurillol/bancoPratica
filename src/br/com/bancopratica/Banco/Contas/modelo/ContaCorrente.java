@@ -1,8 +1,10 @@
 package br.com.bancopratica.Banco.Contas.modelo;
 
+import br.com.bancopratica.Banco.Exceptions.modelo.*;
+
 public class ContaCorrente extends Conta {
 	
-	public ContaCorrente(int numero, int agencia) {
+	public ContaCorrente(int numero, int agencia) throws SaldoInsuficienteException {
 		super(agencia, numero);
 	}
 
@@ -31,7 +33,11 @@ public class ContaCorrente extends Conta {
 	@Override
 	public void transfere(Conta contaDestino, double valor) {
 		this.saca(valor);
-		contaDestino.deposita(valor);
+		try {
+			contaDestino.deposita(valor);
+			}catch(Exception e) {
+				System.out.println(e);
+			}
 	}
 
 	

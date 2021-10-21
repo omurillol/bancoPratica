@@ -1,34 +1,47 @@
 package br.com.bancopratica.Banco.Contas.modelo;
 
+import br.com.bancopratica.Banco.Exceptions.modelo.SaldoInsuficienteException;
+
 public class ContaPemium extends Conta {
 	
-	public ContaPemium(int agencia, int numero, int saldoInicial) {
+	public ContaPemium(int agencia, int numero, int saldoInicial) throws SaldoInsuficienteException {
 		//A conta premium é para clientes mais ricos. Logo, requer um primeiro depósito
 		//maior do que R$300.000;
 		
 		super(agencia, numero);
 		// TODO Auto-generated constructor stub
 		
-		if(saldoInicial > 3000000) {
+		if(saldoInicial > 30000) {
 			this.deposita(saldoInicial);
-		}else {
+		}else{
+				
 			//criar uma exception aqui o quanto antes possível
-			System.out.println("É necessário um valor maior ou igual a 300k para instanciar"
-					+ "uma conta premium");
+			throw new SaldoInsuficienteException("O saldo é insuficiente");
 		}
+		
 	}
 	
 
 	@Override
-	public void deposita(double valor) {
-		this.saldo = valor -(valor* 0.15);
-
+	public void deposita(double valor) throws SaldoInsuficienteException {
+		if(valor>=500) {
+		super.saldo = valor -(valor* 0.15);
+		}else {
+			throw new SaldoInsuficienteException("A conta é premium, "
+					+ "valor mínimo de depósito: R$500,00");
+		}
 	}
 
+	/*mexer no transfere depois. Conta premium necessita de um valor em questão
+	 para transfere. Valor em mente: Pelo menos R$1.000,00*/
 	@Override
-	public void transfere(Conta conta, double valor) {
+	public void transfere(Conta contaDestino, double valor) {
 		this.saca(valor);
-		conta.deposita(valor - (valor*0.20));
+		try {
+			contaDestino.deposita(valor - (valor*0.20));
+			}catch(Exception e) {
+				System.out.println(e);
+			}
 
 	}
 

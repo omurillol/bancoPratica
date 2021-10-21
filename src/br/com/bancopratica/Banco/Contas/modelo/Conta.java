@@ -1,4 +1,7 @@
 package br.com.bancopratica.Banco.Contas.modelo;
+
+import br.com.bancopratica.Banco.Exceptions.modelo.SaldoInsuficienteException;
+
 /***
  * Classe abstrata base de todas as contas
  * 
@@ -16,7 +19,7 @@ public abstract class Conta {
 	private static int total; //classe criada para ver a quantidade de contas no sistema
 	
 	//abaixo, o construtor
-	public Conta(int agencia, int numero) {
+	public Conta(int agencia, int numero) throws SaldoInsuficienteException{
 		total++;
 		
 		
@@ -43,7 +46,7 @@ public abstract class Conta {
 		return this.agencia;
 	}
 	
-	public abstract void deposita(double saldo);
+	public abstract void deposita(double saldo) throws SaldoInsuficienteException;
 	
 	public abstract void transfere(Conta conta, double valor);
 	
