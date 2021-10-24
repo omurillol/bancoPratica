@@ -12,7 +12,7 @@ public class ContaCorrente extends Conta {
 	public void deposita(double valor) {
 		//!! Conta corrente - Depósito sem taxas.
 		if(valor>=1) {
-		super.saldo+=valor;
+		this.saldo+=valor;
 		}else{
 		System.out.println("Não é possível depositar valor menores que R$1."); //implementar excemption aqui o quanto antes possível
 		}

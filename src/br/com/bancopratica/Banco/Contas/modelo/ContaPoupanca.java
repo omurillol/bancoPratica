@@ -11,7 +11,7 @@ public class ContaPoupanca extends Conta {
 	public void deposita(double valor) throws SaldoInsuficienteException {
 		//!! Conta Poupança - Depósito com taxa de 10%.
 		if(valor>=1) {
-		super.saldo+=(valor - (valor*0.1));
+		this.saldo+=(valor - (valor*0.1));
 		}else{
 			throw new SaldoInsuficienteException("O saldo é insuficiente");
 		}
